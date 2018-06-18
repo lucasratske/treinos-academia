@@ -1,0 +1,8 @@
+{
+  "name": "treinos-academia",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
