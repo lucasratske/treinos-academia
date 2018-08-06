@@ -1,0 +1,16 @@
+app-header {
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  display: block;
+  width: 100%;
+  background: color($colors, primary);
+
+  ion-navbar {
+
+    .toolbar-background {
+      background: color($colors, primary);
+    }
+  }
+}

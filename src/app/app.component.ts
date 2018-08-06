@@ -29,4 +29,11 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+  goToPage(page: string) {
+    if (page == this.rootPage)
+      this.nav.setRoot(page);
+    else
+      this.nav.push(page);
+  }
 }

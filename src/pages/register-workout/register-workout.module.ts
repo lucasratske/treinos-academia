@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from './../../components/components.module';
-import { CadastrarTreinoPage } from './cadastrar-treino';
+import { RegisterWorkoutPage } from './register-workout';
 import { MongoProvider } from '../../providers/mongo/mongo';
 
 @NgModule({
   declarations: [
-    CadastrarTreinoPage,
+    RegisterWorkoutPage,
   ],
   imports: [
-    IonicPageModule.forChild(CadastrarTreinoPage), ComponentsModule,
+    IonicPageModule.forChild(RegisterWorkoutPage), ComponentsModule,
   ],
   providers: [
     MongoProvider
   ]
 })
-export class CadastrarTreinoPageModule {}
+export class RegisterWorkoutPageModule {}

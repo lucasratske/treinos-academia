@@ -1,2 +1,14 @@
+<ion-menu [content]="content">
+  <ion-content>
+    <header>
+        Menu
+    </header>
+    <ion-list>
+        <button ion-item (click)="goToPage('HomePage')"> <ion-icon name="list"></ion-icon> Meus treinos</button>
+        <button ion-item (click)="goToPage('RegisterUserPage')"> <ion-icon name="list"></ion-icon> Registro de usuario</button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

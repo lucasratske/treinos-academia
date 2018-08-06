@@ -1,0 +1,25 @@
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+
+        <form #submitForm="ngForm" (ngSubmit)="onSubmit()" >
+
+        <ion-list>
+
+            <ion-item>
+              <ion-label> E-mail </ion-label>
+              <ion-input type="email" [(ngModel)]="user.email" name="email" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label> Senha </ion-label>
+              <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+            </ion-item>
+
+        </ion-list>
+
+        <button ion-button full [disabled]="submitForm.invalid"> Salvar </button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

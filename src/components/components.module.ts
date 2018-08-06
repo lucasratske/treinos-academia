@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { HeaderComponent } from './header/header';
+import { AppHeaderComponent } from './app-header/app-header';
 import { IonicModule } from "ionic-angular";
 
 @NgModule({
-	declarations: [HeaderComponent],
+	declarations: [AppHeaderComponent],
 	imports: [IonicModule],
-	exports: [HeaderComponent]
+	exports: [AppHeaderComponent]
 })
 export class ComponentsModule {}

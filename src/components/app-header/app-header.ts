@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'header',
-  templateUrl: 'header.html'
+  selector: 'app-header',
+  templateUrl: 'app-header.html'
 })
-export class HeaderComponent {
+export class AppHeaderComponent {
 
 	@Input() name: string;
 

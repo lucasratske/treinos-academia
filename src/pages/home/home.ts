@@ -32,9 +32,9 @@ export class HomePage {
 
   }
 
-  goCadastrarTreino()
+  goRegisterWorkout()
   {
-    this.navCtrl.push("CadastrarTreinoPage");
+    this.navCtrl.push("RegisterWorkoutPage");
   }
 
   deleteWorkout(id: string) {
@@ -44,7 +44,7 @@ export class HomePage {
 
   editWorkout(id: string) {
     this.navCtrl.push(
-      "CadastrarTreinoPage",
+      "RegisterWorkoutPage",
       {
         workoutId: id
       }

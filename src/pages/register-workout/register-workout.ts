@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Workout } from '../../models/workout';
-import { MongoProvider } from './../../providers/mongo/mongo';
+import { MongoProvider } from '../../providers/mongo/mongo';
 
 @IonicPage()
 @Component({
-  selector: 'page-cadastrar-treino',
-  templateUrl: 'cadastrar-treino.html',
+  selector: 'page-register-workout',
+  templateUrl: 'register-workout.html',
 })
-export class CadastrarTreinoPage {
+export class RegisterWorkoutPage {
 
   workout: Workout;
   workoutId: string;
@@ -39,7 +39,7 @@ export class CadastrarTreinoPage {
 
   onSubmit() {
     this.mongoProvider.post("workouts", this.workout)
-      .subscribe(d => this.navCtrl.pop());
+      .subscribe(d => this.navCtrl.setRoot("LoginPage"));
   }
 
 }
