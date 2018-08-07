@@ -29,7 +29,7 @@ export class RegisterWorkoutPage {
       loading.present();
 
       this.mongoProvider.get("workouts", this.workoutId)
-        .subscribe(d => {
+        .subscribe((d: Workout) => {
           this.workout = d;
           loading.dismiss();
           console.log(d);
@@ -39,7 +39,7 @@ export class RegisterWorkoutPage {
 
   onSubmit() {
     this.mongoProvider.post("workouts", this.workout)
-      .subscribe(d => this.navCtrl.setRoot("LoginPage"));
+      .subscribe(() => this.navCtrl.setRoot("LoginPage"));
   }
 
 }

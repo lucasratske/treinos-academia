@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Nav, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -9,9 +10,9 @@ import { Nav, Platform } from 'ionic-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = "HomePage";
+  rootPage: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage: Storage) {
     this.initializeApp();
   }
 
@@ -21,13 +22,17 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.openPage();
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  openPage() {
+    this.storage.get('user').then((val) => {
+      this.rootPage = "HomePage";
+      if (val == null)
+        this.rootPage = "LoginPage";
+      this.nav.setRoot(this.rootPage);
+    });
   }
 
   goToPage(page: string) {
@@ -35,5 +40,10 @@ export class MyApp {
       this.nav.setRoot(page);
     else
       this.nav.push(page);
+  }
+
+  logout() {
+    this.storage.remove("user");
+    this.initializeApp();
   }
 }
