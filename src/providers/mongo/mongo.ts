@@ -1,13 +1,13 @@
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as CONSTANTS from '../../constants/constants';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class MongoProvider {
-  headers = new Headers();
+  headers = new HttpHeaders();
 
-  constructor(public http: Http) {
+  constructor(public http: HttpClient) {
     this.headers.append('Content-Type', 'application/json');
   }
 
@@ -19,7 +19,7 @@ export class MongoProvider {
     return this.http.get(
       apiUrl,
       { headers: this.headers })
-      .map(res => res.json());
+      .map(res => res);
   }
 
   post(dbName: string, collection: any) {
@@ -27,7 +27,7 @@ export class MongoProvider {
       CONSTANTS.DB_URL + dbName + "?apiKey=" + CONSTANTS.API_KEY,
       collection,
       { headers: this.headers })
-      .map(res => res.json());
+      .map(res => res);
   }
 
   put(dbName: string, collection: any) {
@@ -35,13 +35,13 @@ export class MongoProvider {
       CONSTANTS.DB_URL + dbName + "/" + collection._id.$oid + "?apiKey=" + CONSTANTS.API_KEY,
       collection,
       { headers: this.headers })
-      .map(res => res.json());
+      .map(res => res);
   }
 
   delete(dbName: string, collectionId: string) {
     return this.http.delete(
       CONSTANTS.DB_URL + dbName + "/" + collectionId + "?apiKey=" + CONSTANTS.API_KEY,
       { headers: this.headers })
-      .map(res => res.json());
+      .map(res => res);
   }
 }

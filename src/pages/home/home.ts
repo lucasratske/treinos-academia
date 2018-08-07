@@ -10,7 +10,7 @@ import { Workout } from './../../models/workout';
 })
 export class HomePage {
 
-  workouts: Workout[];
+  workouts: Workout[] = [];
 
   constructor(
     public navCtrl: NavController,
@@ -23,9 +23,8 @@ export class HomePage {
     let loading = this.loadingCtrl.create({content: "Loading..."});
     loading.present();
 
-    this.workouts = [];
     this.mongoProvider.get("workouts")
-      .subscribe(d => {
+      .subscribe((d: Workout[]) => {
         this.workouts = d;
         loading.dismiss();
       });
