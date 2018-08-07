@@ -43,7 +43,8 @@ export class MyApp {
   }
 
   logout() {
-    this.storage.remove("user");
-    this.initializeApp();
+    this.storage.remove("user")
+      .then(() => this.initializeApp())
+      .catch((e)=> console.log(`Error at removing the user from storage`, e))
   }
 }

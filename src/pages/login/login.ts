@@ -23,8 +23,9 @@ export class LoginPage {
   }
 
   onSubmit() {
-    this.storage.set('user', this.user);
-    this.navCtrl.setRoot("HomePage");
+    this.storage.set('user', this.user)
+      .then(() => this.navCtrl.setRoot("HomePage"))
+      .catch((e) => console.log("Error at setting the user in the storage", e));
   }
 
 }
