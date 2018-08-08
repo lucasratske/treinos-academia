@@ -41,4 +41,8 @@ export class LoginPage {
       .catch((e) => console.log("Error at setting the user in the storage", e));
   }
 
+  goNovoUsuario() {
+    this.navCtrl.push("RegisterUserPage");
+  }
+
 }
