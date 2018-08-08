@@ -3,7 +3,7 @@
     <name>Meus treinos</name>
     <description>Um aplicativo para registrar sua agenda de treinos</description>
     <author email="lucas.ratske@gmail.com" href="http://ratske.com.br/">Lucas Ratske</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.43.184:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -87,6 +87,7 @@
     <allow-navigation href="http://192.168.0.19:8100" />
     <allow-navigation href="http://192.168.43.184:8100" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
+    <allow-navigation href="http://10.220.239.185:8100" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>

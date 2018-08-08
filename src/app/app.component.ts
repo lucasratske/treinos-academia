@@ -12,14 +12,17 @@ export class MyApp {
 
   rootPage: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage: Storage) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private storage: Storage
+  ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.openPage();
@@ -28,18 +31,14 @@ export class MyApp {
 
   openPage() {
     this.storage.get('user').then((val) => {
-      this.rootPage = "HomePage";
-      if (val == null)
-        this.rootPage = "LoginPage";
+      this.rootPage = (val == null) ? "LoginPage" : "HomePage";
       this.nav.setRoot(this.rootPage);
     });
   }
 
   goToPage(page: string) {
-    if (page == this.rootPage)
-      this.nav.setRoot(page);
-    else
-      this.nav.push(page);
+    if (page == this.rootPage) this.nav.setRoot(page);
+    else this.nav.push(page);
   }
 
   logout() {

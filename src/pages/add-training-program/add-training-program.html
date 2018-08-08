@@ -1,0 +1,24 @@
+<ion-header>
+  <app-header name="Novo programa de treino"></app-header>
+</ion-header>
+
+
+<ion-content padding>
+    <form #submitForm="ngForm" (ngSubmit)="onSubmit()" >
+      <ion-list>
+
+          <ion-item>
+            <ion-label> Nome </ion-label>
+            <ion-input type="text" [(ngModel)]="trainingProgram.name" name="name" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Ativo</ion-label>
+            <ion-toggle checked="true" name="active" [(ngModel)]="trainingProgram.active"></ion-toggle>
+          </ion-item>
+
+      </ion-list>
+
+      <button ion-button full [disabled]="submitForm.invalid"> Salvar </button>
+    </form>
+</ion-content>
