@@ -3,9 +3,8 @@
 </ion-header>
 
 
-<ion-content padding>
-    <form #submitForm="ngForm" (ngSubmit)="onSubmit()" >
-      <ion-list>
+<ion-content scroll="true">
+      <ion-list padding>
 
           <ion-item>
             <ion-label> Nome </ion-label>
@@ -19,6 +18,13 @@
 
       </ion-list>
 
-      <button ion-button full [disabled]="submitForm.invalid"> Salvar </button>
-    </form>
+      <div>
+        <h3 padding> Treinos </h3>
+
+        <ion-item-group *ngFor="let workout of workouts">
+          <ion-item-divider color="light"> {{ workout.name }} </ion-item-divider>
+          <ion-item *ngFor="let exercise of exercises"> {{ exercise.name }} </ion-item>
+        </ion-item-group>
+
+      </div>
 </ion-content>

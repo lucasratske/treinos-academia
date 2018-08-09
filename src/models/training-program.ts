@@ -5,5 +5,5 @@ export class TrainingProgram {
   name: string;
   date_start: Date;
   date_end: Date;
-  active: boolean;
+  active: boolean = true;
 }
