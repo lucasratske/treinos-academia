@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, LoadingController, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController } from 'ionic-angular';
 import { MongoProvider } from '../../providers/mongo/mongo';
 import { Workout } from './../../models/workout';
 import { Storage } from '@ionic/storage';
@@ -13,12 +13,12 @@ import { User } from './../../models/user';
 export class HomePage {
 
   workouts: Workout[] = [];
+  user: User = new User();
 
   constructor(
     public navCtrl: NavController,
     public mongoProvider: MongoProvider,
     public loadingCtrl: LoadingController,
-    private toastCtrl: ToastController,
     private storage: Storage
   ) {
   }
@@ -27,30 +27,28 @@ export class HomePage {
     let loading = this.loadingCtrl.create({content: "Loading..."});
     loading.present();
 
-    //let user: User = new User();
-    // this.storage.get("user")
-    //   .then((v) => {
-    //     user = v;
-    //     let toast = this.toastCtrl.create({
-    //       message: 'Bem vindo ' + user.name,
-    //       duration: 3000,
-    //       position: 'top'
-    //     });
-    //     toast.present();
-    //   })
-    //   .catch((e) => console.log("Error getting the user from storage", e));
+    this.storage.get("user")
+      .then((v) => {
+        this.user = v;
 
-    this.mongoProvider.get("workouts")
-      .subscribe((d: Workout[]) => {
-        this.workouts = d;
-        loading.dismiss();
-      });
+        this.mongoProvider.get("workouts")
+          .subscribe((d: Workout[]) => {
+            this.workouts = d;
+            loading.dismiss();
+          });
+      })
+      .catch((e) => console.log("Error getting the user from storage", e));
 
   }
 
-  goRegisterWorkout()
+  goToAddTrainingProgram()
   {
-    this.navCtrl.push("RegisterWorkoutPage");
+    this.navCtrl.push(
+      'AddTrainingProgramPage',
+      {
+        userId: this.user._id.$oid
+      }
+    );
   }
 
   deleteWorkout(id: string) {

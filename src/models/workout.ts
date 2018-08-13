@@ -4,6 +4,5 @@ export class Workout {
   };
   name: string;
   order: number;
-  userId: string;
   trainingProgramId: string;
 }

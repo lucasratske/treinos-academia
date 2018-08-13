@@ -3,7 +3,6 @@ export class Exercise {
     $oid: string
   };
   name: string;
-  repetitions: number;
-  cycle: number;
-  workoutId: number;
+  repetitions: string;
+  workoutId: string;
 }

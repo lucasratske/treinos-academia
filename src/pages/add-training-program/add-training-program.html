@@ -2,7 +2,6 @@
   <app-header name="Novo programa de treino"></app-header>
 </ion-header>
 
-
 <ion-content scroll="true">
       <ion-list padding>
 
@@ -18,12 +17,31 @@
 
       </ion-list>
 
-      <div>
-        <h3 padding> Treinos </h3>
+      <div class="workouts">
+        <header>
+          <span padding class="title"> Treinos </span>
+          <button ion-button icon-only (click)="addWorkout()">
+              <ion-icon name="add"></ion-icon>
+          </button>
+        </header>
+        <ion-item-group class="workout-list" *ngFor="let workout of workouts">
+          <ion-item-divider color="light">
+            <span item-start>{{ workout.name }}</span>
 
-        <ion-item-group *ngFor="let workout of workouts">
-          <ion-item-divider color="light"> {{ workout.name }} </ion-item-divider>
-          <ion-item *ngFor="let exercise of exercises"> {{ exercise.name }} </ion-item>
+            <button item-end ion-button icon-only (click)="openAlertAddExercicio(workout)">
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-item-divider>
+          <ng-template *ngFor="let exercise of exercises">
+            <ion-item *ngIf="exercise.workoutId == workout._id.$oid">
+              <ion-grid>
+                <ion-row>
+                    <ion-col col-9 text-left>{{ exercise.name }}</ion-col>
+                    <ion-col col-3 text-right>{{ exercise.repetitions }}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ng-template>
         </ion-item-group>
 
       </div>

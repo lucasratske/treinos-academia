@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <!-- <ion-list *ngIf="workouts.length > 0">
       <ion-item-sliding *ngFor="let workout of workouts">
         <ion-item>
           <h2> {{ workout.name }}</h2>
@@ -17,5 +17,16 @@
             </button>
         </ion-item-options>
       </ion-item-sliding>
-  </ion-list>
+  </ion-list> -->
+
+  <ion-card>
+    <ion-card-header text-center>
+      Sem nenhum plano de treino
+    </ion-card-header>
+
+    <ion-card-content>
+      <button ion-button full (click)="goToAddTrainingProgram()"> Adicionar plano</button>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
