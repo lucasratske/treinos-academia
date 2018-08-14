@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from './../../components/components.module';
-import { MongoProvider } from './../../providers/mongo/mongo';
 import { HomePage } from './home';
+import { TrainingProgramProvider } from './../../providers/training-program/training-program';
+import { MongoProvider } from './../../providers/mongo/mongo';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { HomePage } from './home';
     ComponentsModule
   ],
   providers: [
-    MongoProvider
+    MongoProvider,
+    TrainingProgramProvider
   ]
 })
 export class HomePageModule {}

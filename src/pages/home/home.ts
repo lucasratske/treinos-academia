@@ -1,6 +1,8 @@
+import { MongoProvider } from './../../providers/mongo/mongo';
+import { TrainingProgram } from './../../models/training-program';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController } from 'ionic-angular';
-import { MongoProvider } from '../../providers/mongo/mongo';
+import { TrainingProgramProvider } from '../../providers/training-program/training-program';
 import { Workout } from './../../models/workout';
 import { Storage } from '@ionic/storage';
 import { User } from './../../models/user';
@@ -12,11 +14,13 @@ import { User } from './../../models/user';
 })
 export class HomePage {
 
+  trainingProgram: TrainingProgram = new TrainingProgram();
   workouts: Workout[] = [];
   user: User = new User();
 
   constructor(
     public navCtrl: NavController,
+    public trainingProgramProvider: TrainingProgramProvider,
     public mongoProvider: MongoProvider,
     public loadingCtrl: LoadingController,
     private storage: Storage
@@ -28,12 +32,16 @@ export class HomePage {
     loading.present();
 
     this.storage.get("user")
-      .then((v) => {
+      .then((v: User) => {
         this.user = v;
 
-        this.mongoProvider.get("workouts")
-          .subscribe((d: Workout[]) => {
-            this.workouts = d;
+        this.trainingProgramProvider.getOneByUser(v._id.$oid)
+          .subscribe((trainingProgram: TrainingProgram) => {
+            this.trainingProgram = trainingProgram;
+            console.log(trainingProgram);
+            const q = `q{ trainingProgramId = '${trainingProgram._id.$oid}' }`
+            this.mongoProvider.getByQuery("workouts", q)
+              .subscribe((workouts: Workout[]) => this.workouts = workouts);
             loading.dismiss();
           });
       })
@@ -52,8 +60,8 @@ export class HomePage {
   }
 
   deleteWorkout(id: string) {
-    this.mongoProvider.delete("workouts", id)
-      .subscribe(d => console.log(d));
+    // this.mongoProvider.delete("workouts", id)
+    //   .subscribe(d => console.log(d));
   }
 
   editWorkout(id: string) {

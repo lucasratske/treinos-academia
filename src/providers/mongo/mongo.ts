@@ -11,37 +11,40 @@ export class MongoProvider {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  get(dbName: string, collectionId: string = "") {
-    const apiUrl = (collectionId === "") ?
-      CONSTANTS.DB_URL + dbName + "?apiKey=" + CONSTANTS.API_KEY :
-      CONSTANTS.DB_URL + dbName + "/" + collectionId + "?apiKey=" + CONSTANTS.API_KEY;
+  get(collName: string, collId: string = "") {
+    const apiUrl = (collId === "") ?
+      CONSTANTS.DB_URL + collName + "?apiKey=" + CONSTANTS.API_KEY :
+      CONSTANTS.DB_URL + collName + "/" + collId + "?apiKey=" + CONSTANTS.API_KEY;
 
     return this.http.get(
       apiUrl,
-      { headers: this.headers })
-      .map(res => res);
+      { headers: this.headers });
   }
 
-  post(dbName: string, collection: any) {
+  post(collName: string, collection: any) {
     return this.http.post(
-      CONSTANTS.DB_URL + dbName + "?apiKey=" + CONSTANTS.API_KEY,
+      CONSTANTS.DB_URL + collName + "?apiKey=" + CONSTANTS.API_KEY,
       collection,
-      { headers: this.headers })
-      .map(res => res);
+      { headers: this.headers });
   }
 
-  put(dbName: string, collection: any) {
+  put(collName: string, collection: any) {
     return this.http.put(
-      CONSTANTS.DB_URL + dbName + "/" + collection._id.$oid + "?apiKey=" + CONSTANTS.API_KEY,
+      CONSTANTS.DB_URL + collName + "/" + collection._id.$oid + "?apiKey=" + CONSTANTS.API_KEY,
       collection,
-      { headers: this.headers })
-      .map(res => res);
+      { headers: this.headers });
   }
 
-  delete(dbName: string, collectionId: string) {
+  delete(collName: string, collId: string) {
     return this.http.delete(
-      CONSTANTS.DB_URL + dbName + "/" + collectionId + "?apiKey=" + CONSTANTS.API_KEY,
-      { headers: this.headers })
-      .map(res => res);
+      CONSTANTS.DB_URL + collName + "/" + collId + "?apiKey=" + CONSTANTS.API_KEY,
+      { headers: this.headers });
+  }
+
+  getByQuery(collName: string, query: string) {
+    const apiUrl = `${CONSTANTS.DB_URL}${collName}?${query}&apiKey=${CONSTANTS.API_KEY}`
+    return this.http.get(
+      apiUrl,
+      { headers: this.headers });
   }
 }
