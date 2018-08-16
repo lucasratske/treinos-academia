@@ -42,7 +42,7 @@ export class MongoProvider {
   }
 
   getByQuery(collName: string, query: string) {
-    const apiUrl = `${CONSTANTS.DB_URL}${collName}?${query}&apiKey=${CONSTANTS.API_KEY}`
+    const apiUrl = `${CONSTANTS.DB_URL}${collName}?${query}&apiKey=${CONSTANTS.API_KEY}`;
     return this.http.get(
       apiUrl,
       { headers: this.headers });

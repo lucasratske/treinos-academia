@@ -38,8 +38,7 @@ export class HomePage {
         this.trainingProgramProvider.getOneByUser(v._id.$oid)
           .subscribe((trainingProgram: TrainingProgram) => {
             this.trainingProgram = trainingProgram;
-            console.log(trainingProgram);
-            const q = `q{ trainingProgramId = '${trainingProgram._id.$oid}' }`
+            const q = `q{ trainingProgramId = '${trainingProgram._id.$oid}' }`;
             this.mongoProvider.getByQuery("workouts", q)
               .subscribe((workouts: Workout[]) => this.workouts = workouts);
             loading.dismiss();
@@ -57,11 +56,6 @@ export class HomePage {
         userId: this.user._id.$oid
       }
     );
-  }
-
-  deleteWorkout(id: string) {
-    // this.mongoProvider.delete("workouts", id)
-    //   .subscribe(d => console.log(d));
   }
 
   editWorkout(id: string) {

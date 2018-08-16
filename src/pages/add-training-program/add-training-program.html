@@ -1,21 +1,8 @@
 <ion-header>
-  <app-header name="Novo programa de treino"></app-header>
+  <app-header name="Programa de treino"></app-header>
 </ion-header>
 
 <ion-content scroll="true">
-      <ion-list padding>
-
-          <ion-item>
-            <ion-label> Nome </ion-label>
-            <ion-input type="text" [(ngModel)]="trainingProgram.name" name="name" required></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Ativo</ion-label>
-            <ion-toggle checked="true" name="active" [(ngModel)]="trainingProgram.active"></ion-toggle>
-          </ion-item>
-
-      </ion-list>
 
       <div class="workouts">
         <header>
@@ -31,17 +18,23 @@
             <button item-end ion-button icon-only (click)="openAlertAddExercicio(workout)">
               <ion-icon name="add"></ion-icon>
             </button>
+            <button item-end ion-button icon-only (click)="delete('workouts', workout)">
+              <ion-icon name="trash" color='danger'></ion-icon>
+            </button>
           </ion-item-divider>
-          <ng-template *ngFor="let exercise of exercises">
+          <div *ngFor="let exercise of exercises">
             <ion-item *ngIf="exercise.workoutId == workout._id.$oid">
               <ion-grid>
                 <ion-row>
-                    <ion-col col-9 text-left>{{ exercise.name }}</ion-col>
+                    <ion-col col-7 text-left>{{ exercise.name }}</ion-col>
                     <ion-col col-3 text-right>{{ exercise.repetitions }}</ion-col>
+                    <ion-col col-2 text-right>
+                      <ion-icon name="trash" color='danger' (click)="delete('exercises', exercise)"></ion-icon>
+                    </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-          </ng-template>
+          </div>
         </ion-item-group>
 
       </div>

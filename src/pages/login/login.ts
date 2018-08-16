@@ -26,7 +26,7 @@ export class LoginPage {
   }
 
   onSubmit() {
-    this.mongoProvider.get("users", "5b70d5681f6e4f22f3f8c6b2")
+    this.mongoProvider.get("users", "5b74d5c91f6e4f589bb33cc0")
       .subscribe(
         (d: User) => {
           this.user = d;

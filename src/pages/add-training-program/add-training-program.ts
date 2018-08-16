@@ -1,8 +1,9 @@
+import { TrainingProgramProvider } from './../../providers/training-program/training-program';
 import { MongoProvider } from './../../providers/mongo/mongo';
 import { Exercise } from './../../models/exercise';
 import { Workout } from './../../models/workout';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, LoadingController } from 'ionic-angular';
 import { TrainingProgram } from '../../models/training-program';
 
 @IonicPage()
@@ -16,15 +17,56 @@ export class AddTrainingProgramPage {
   workouts: Workout[] = [];
   exercises: Exercise[] = [];
   userId: string;
+  loading;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private mongoProvider: MongoProvider
+    private loadingCtrl: LoadingController,
+    private mongoProvider: MongoProvider,
+    private trainingProgramProvider: TrainingProgramProvider
   ) {
     this.userId = this.navParams.get("userId");
+    this.loadingAll();
+  }
+
+  loadingAll() {
+    this.loading = this.loadingCtrl.create({content: "Loading..."});
+    this.loading.present();
+    this.getAll().then(() => {
+      this.loading.dismiss();
+    })
+    .catch((err) => this.loading.dismiss());
+  }
+
+  getAll(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.trainingProgramProvider.getOneByUser(this.userId)
+      .subscribe((r: TrainingProgram) => {
+        this.trainingProgram = r;
+        const query = `q{ trainingProgramId = '${r._id.$oid}' }`;
+        this.mongoProvider.getByQuery("workouts", query)
+          .subscribe((workouts: Workout[]) => {
+            if (workouts.length) {
+              this.workouts = workouts;
+              workouts.forEach(workout => {
+                const query = `q{ workoutId = '${workout._id.$oid}' }`;
+                this.mongoProvider.getByQuery("exercises", query)
+                  .subscribe((exercises: Exercise[]) => {
+                    if (exercises.length) {
+                      this.exercises = exercises;
+                      resolve();
+                    }
+                    else reject();
+                  });
+              });
+            }
+            else reject();
+          });
+      });
+    })
   }
 
   openAlertAddExercicio(workout: Workout) {
@@ -109,12 +151,22 @@ export class AddTrainingProgramPage {
     });
   }
 
+  delete(type: string, object: any) {
+    this.mongoProvider.delete(type, object._id.$oid)
+      .subscribe(() => {
+        this.loadingAll();
+        this.showToast("delete");
+      });
+  }
+
   showToast(type: string) {
     let msg = "";
     if (type == 'workout')
       msg = "Treino adicionado com sucesso!";
     else if (type == 'exercise')
       msg = "Exercício adicionado com sucesso!";
+    else if (type == 'delete')
+      msg = "Deletado com sucesso!";
 
     let toast = this.toastCtrl.create({
       message: msg,

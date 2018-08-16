@@ -1,3 +1,4 @@
+import { User } from './../models/user';
 import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -36,9 +37,17 @@ export class MyApp {
     });
   }
 
-  goToPage(page: string) {
+  goToPrograms() {
+    this.storage.get('user').then((val: User) => {
+      this.goToPage("ListTrainingProgramPage", {
+        "userId": val._id.$oid
+      });
+    });
+  }
+
+  goToPage(page: string, params = {}) {
     if (page == this.rootPage) this.nav.setRoot(page);
-    else this.nav.push(page);
+    else this.nav.push(page, params);
   }
 
   logout() {
