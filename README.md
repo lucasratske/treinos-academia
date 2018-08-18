@@ -1,8 +1,8 @@
-## Meus Treinos
+# Meus Treinos
 
 Aplicativo para cadastrar um plano de treinos
 
-# Como usar
+## Como usar
 
 Depois de clonar o projeto para sua pasta, abra o console e faca o seguinte:
 
