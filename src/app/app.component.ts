@@ -49,10 +49,4 @@ export class MyApp {
     if (page == this.rootPage) this.nav.setRoot(page);
     else this.nav.push(page, params);
   }
-
-  logout() {
-    this.storage.remove("user")
-      .then(() => this.initializeApp())
-      .catch((e)=> console.log(`Error at removing the user from storage`, e))
-  }
 }

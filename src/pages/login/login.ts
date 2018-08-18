@@ -1,8 +1,8 @@
+import { UserService } from './../../providers/user/user.service';
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { MongoProvider } from '../../providers/mongo/mongo';
 
 @IonicPage()
 @Component({
@@ -11,13 +11,14 @@ import { MongoProvider } from '../../providers/mongo/mongo';
 })
 export class LoginPage {
 
-  user: User
+  user: User;
+  incorrect: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private storage: Storage,
     private toastCtrl: ToastController,
-    private mongoProvider: MongoProvider
+    private userService: UserService
   ) {
     this.user = new User();
   }
@@ -26,25 +27,27 @@ export class LoginPage {
   }
 
   onSubmit() {
-    this.mongoProvider.get("users", "5b74d5c91f6e4f589bb33cc0")
-      .subscribe(
-        (d: User) => {
-          this.user = d;
-          this.storage.set('user', d)
-            .then(() => {
-              let toast = this.toastCtrl.create({
-                message: 'Bem vindo ' + d.name,
-                duration: 3000,
-                position: 'bottom'
-              });
-              toast.present();
-              this.navCtrl.setRoot("HomePage");
-            })
-            .catch((e) => console.log("Error at setting the user in the storage", e));
-        },
-        (err) => console.log("Error at saving", err)
-      );
-    }
+    this.userService.getAccess(this.user)
+    .subscribe((u: User) => {
+      if (u) {
+        this.user = u;
+        this.incorrect = false;
+        this.storage.set('user', u)
+        .then(() => {
+          let toast = this.toastCtrl.create({
+            message: 'Bem vindo ' + u.name,
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
+          this.navCtrl.setRoot("HomePage");
+        })
+        .catch((e) => console.log("Error at setting the user in the storage", e));
+      }
+      else this.incorrect = true;
+    },
+    (err) => console.log("error", err));
+  }
 
   goNovoUsuario() {
     this.navCtrl.push("RegisterUserPage");

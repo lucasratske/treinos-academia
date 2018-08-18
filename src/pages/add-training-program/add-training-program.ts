@@ -1,5 +1,7 @@
-import { TrainingProgramProvider } from './../../providers/training-program/training-program';
-import { MongoProvider } from './../../providers/mongo/mongo';
+import { WorkoutService } from './../../providers/workout/workout.service';
+import { ExerciseService } from './../../providers/exercise/exercise.service';
+import { TrainingProgramService } from './../../providers/training-program/training-program.service';
+import { MongoService } from './../../providers/mongo/mongo.service';
 import { Exercise } from './../../models/exercise';
 import { Workout } from './../../models/workout';
 import { Component } from '@angular/core';
@@ -25,8 +27,10 @@ export class AddTrainingProgramPage {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private mongoProvider: MongoProvider,
-    private trainingProgramProvider: TrainingProgramProvider
+    private mongoService: MongoService,
+    private trainingProgramService: TrainingProgramService,
+    private workoutService: WorkoutService,
+    private exerciseService: ExerciseService
   ) {
     this.userId = this.navParams.get("userId");
     this.loadingAll();
@@ -35,37 +39,51 @@ export class AddTrainingProgramPage {
   loadingAll() {
     this.loading = this.loadingCtrl.create({content: "Loading..."});
     this.loading.present();
-    this.getAll().then(() => {
-      this.loading.dismiss();
-    })
-    .catch((err) => this.loading.dismiss());
+    this.workouts = [];
+    this.exercises = [];
+    this.getAll().then(() =>
+      this.loading.dismiss()
+    )
+    .catch(() => {
+      this.exercises = [];
+      this.workouts = [];
+      this.loading.dismiss()
+    });
   }
 
   getAll(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.trainingProgramProvider.getOneByUser(this.userId)
+      this.trainingProgramService.getOneByUser(this.userId)
       .subscribe((r: TrainingProgram) => {
         this.trainingProgram = r;
-        const query = `q{ trainingProgramId = '${r._id.$oid}' }`;
-        this.mongoProvider.getByQuery("workouts", query)
+        this.workoutService.getByProgram(r._id.$oid)
           .subscribe((workouts: Workout[]) => {
             if (workouts.length) {
               this.workouts = workouts;
               workouts.forEach(workout => {
-                const query = `q{ workoutId = '${workout._id.$oid}' }`;
-                this.mongoProvider.getByQuery("exercises", query)
+                this.exerciseService.getByWorkout(workout._id.$oid)
                   .subscribe((exercises: Exercise[]) => {
                     if (exercises.length) {
-                      this.exercises = exercises;
-                      resolve();
+                      exercises.forEach(e => {
+                        this.exercises.push(e);
+                      })
                     }
-                    else reject();
-                  });
+                    if (this.exercises.length || this.workouts.length)
+                      resolve();
+                    else
+                      reject();
+                  },
+                  () => reject()
+                );
               });
             }
             else reject();
-          });
-      });
+          },
+          () => reject()
+        );
+      },
+      () => reject()
+      );
     })
   }
 
@@ -99,7 +117,7 @@ export class AddTrainingProgramPage {
                 workoutId: workout._id.$oid
               }
 
-              this.mongoProvider.post("exercises", exercise)
+              this.mongoService.post("exercises", exercise)
                 .subscribe((d: Exercise) => {
                   this.exercises.push(d);
                   this.showToast('exercise');
@@ -125,7 +143,7 @@ export class AddTrainingProgramPage {
          trainingProgramId: trainingProgram._id.$oid
         };
 
-        this.mongoProvider.post("workouts", workout)
+        this.mongoService.post("workouts", workout)
           .subscribe((d: Workout) => {
             this.workouts.push(d);
             this.showToast('workout');
@@ -139,7 +157,7 @@ export class AddTrainingProgramPage {
         resolve(this.trainingProgram);
       else {
         this.trainingProgram.userId = this.userId;
-        this.mongoProvider.post("programs", this.trainingProgram)
+        this.mongoService.post("programs", this.trainingProgram)
           .subscribe(
             (trainingProgram) => {
               this.trainingProgram = <TrainingProgram>trainingProgram
@@ -152,7 +170,7 @@ export class AddTrainingProgramPage {
   }
 
   delete(type: string, object: any) {
-    this.mongoProvider.delete(type, object._id.$oid)
+    this.mongoService.delete(type, object._id.$oid)
       .subscribe(() => {
         this.loadingAll();
         this.showToast("delete");

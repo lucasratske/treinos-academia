@@ -1,8 +1,8 @@
+import { MongoService } from './../../providers/mongo/mongo.service';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RegisterUserPage } from './register-user';
-import { MongoProvider } from '../../providers/mongo/mongo';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { MongoProvider } from '../../providers/mongo/mongo';
     ComponentsModule
   ],
   providers: [
-    MongoProvider
+    MongoService
   ]
 })
 export class RegisterUserPageModule {}

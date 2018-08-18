@@ -1,9 +1,11 @@
-import { TrainingProgramProvider } from './../../providers/training-program/training-program';
+import { ExerciseService } from './../../providers/exercise/exercise.service';
+import { WorkoutService } from './../../providers/workout/workout.service';
+import { TrainingProgramService } from './../../providers/training-program/training-program.service';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AddTrainingProgramPage } from './add-training-program';
 import { ComponentsModule } from './../../components/components.module';
-import { MongoProvider } from './../../providers/mongo/mongo';
+import { MongoService } from '../../providers/mongo/mongo.service';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,10 @@ import { MongoProvider } from './../../providers/mongo/mongo';
     ComponentsModule
   ],
   providers: [
-    MongoProvider,
-    TrainingProgramProvider
+    MongoService,
+    TrainingProgramService,
+    WorkoutService,
+    ExerciseService
   ]
 })
 export class AddTrainingProgramPageModule {}

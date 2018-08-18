@@ -3,7 +3,7 @@
     <name>Meus treinos</name>
     <description>Um aplicativo para registrar sua agenda de treinos</description>
     <author email="lucas.ratske@gmail.com" href="http://ratske.com.br/">Lucas Ratske</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.19:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

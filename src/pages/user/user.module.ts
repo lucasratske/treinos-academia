@@ -1,19 +1,19 @@
 import { MongoService } from './../../providers/mongo/mongo.service';
+import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { LoginPage } from './login';
-import { UserService } from '../../providers/user/user.service';
+import { UserPage } from './user';
 
 @NgModule({
   declarations: [
-    LoginPage,
+    UserPage,
   ],
   imports: [
-    IonicPageModule.forChild(LoginPage),
+    IonicPageModule.forChild(UserPage),
+    ComponentsModule
   ],
   providers: [
-    MongoService,
-    UserService
+    MongoService
   ]
 })
-export class LoginPageModule {}
+export class UserPageModule {}

@@ -4,7 +4,7 @@ import * as CONSTANTS from '../../constants/constants';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class MongoProvider {
+export class MongoService {
   headers = new HttpHeaders();
 
   constructor(public http: HttpClient) {

@@ -18,6 +18,9 @@
 
         </ion-list>
 
+        <p *ngIf="incorrect" >
+          E-mail e/ou senha incorretos
+        </p>
         <button ion-button full [disabled]="submitForm.invalid"> Entrar </button>
       </form>
 

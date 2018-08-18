@@ -1,27 +1,38 @@
 <ion-header>
-  <app-header name="Meus treinos"></app-header>
+  <ion-toolbar color="primary">
+
+    <ion-title>Meus treinos</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="danger" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <!-- <ion-list *ngIf="workouts.length > 0">
-      <ion-item-sliding *ngFor="let workout of workouts">
-        <ion-item>
-          <h2> {{ workout.name }}</h2>
-        </ion-item>
-        <ion-item-options side="right">
-          <button ion-button clear icon-only color="secondary" (click)="editWorkout(workout._id.$oid);">
-            <ion-icon name="create"></ion-icon>
-          </button>
-          <button ion-button clear icon-only color="danger" (click)="deleteWorkout(workout._id.$oid);">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-        </ion-item-options>
-      </ion-item-sliding>
-  </ion-list> -->
 
-  <ion-card>
+<ion-content padding-top>
+  <ion-list *ngIf="workouts.length > 0">
+      <ion-item-group *ngFor="let workout of workouts">
+        <ion-item-divider color="light">{{ workout.name }}</ion-item-divider>
+        <div *ngFor="let exercise of exercises">
+          <ion-item *ngIf="exercise.workoutId == workout._id.$oid">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-9 text-left>{{ exercise.name }}</ion-col>
+                <ion-col col-3 text-right>{{ exercise.repetitions }}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
+      </ion-item-group>
+  </ion-list>
+
+  <ion-card *ngIf="!hasRegister" padding>
     <ion-card-header text-center>
-      Sem nenhum plano de treino
+      Nenhum plano de treino
     </ion-card-header>
 
     <ion-card-content>
@@ -30,3 +41,22 @@
   </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary">
+
+    <ion-buttons start>
+        <button ion-button icon-end (click)="goToAddTrainingProgram()">
+          Adicionar treino
+          <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-end (click)="goToUser()">
+        Usuário
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
