@@ -11,6 +11,8 @@ Se nao tiver o ionic instalado:
 npm i -g ionic cordova
 ```
 
+E veja em https://ionicframework.com/getting-started/ os pre-requisitos para o Ionic funcionar direitinho.
+
 Se já tiver:
 ```bash
 npm i
