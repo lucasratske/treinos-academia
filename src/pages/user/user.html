@@ -4,10 +4,14 @@
 
 <ion-content padding>
   <ion-card>
+    <ion-card-title padding>
+       {{ user.name }}
+
+       <button item-end ion-button icon-only (click)="openAlertEdit()">
+          <ion-icon name="create"></ion-icon>
+        </button>
+    </ion-card-title>
     <ion-list>
-        <ion-item>
-            <b>Nome:</b> {{ user.name }}
-        </ion-item>
         <ion-item>
             <b>E-mail:</b> {{ user.email }}
         </ion-item>
