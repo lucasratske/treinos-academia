@@ -13,44 +13,49 @@
 </ion-header>
 
 
-<ion-content padding-top>
-  <ion-list *ngIf="workouts.length > 0">
-      <ion-item-group *ngFor="let workout of workouts">
-        <ion-item-divider color="light">{{ workout.name }}</ion-item-divider>
-        <div *ngFor="let exercise of exercises">
-          <ion-item *ngIf="exercise.workoutId == workout._id.$oid">
-            <ion-grid>
-              <ion-row>
-                <ion-col col-9 text-left>{{ exercise.name }}</ion-col>
+<ion-content scroll="true" padding-top>
+
+  <div class="workouts">
+    <header>
+      <span padding class="title"> Treinos </span>
+      <button ion-button icon-only (click)="addWorkout()">
+          <ion-icon name="add"></ion-icon>
+      </button>
+    </header>
+    <ion-item-group class="workout-list" *ngFor="let workout of workouts">
+      <ion-item-divider color="light">
+        <span item-start>{{ workout.name }}</span>
+
+        <button item-end ion-button icon-only (click)="openAlertEditWorkout(workout)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+        <button item-end ion-button icon-only (click)="openAlertAddWorkout(workout)">
+          <ion-icon name="add"></ion-icon>
+        </button>
+        <button item-end ion-button icon-only (click)="delete('workouts', workout)">
+          <ion-icon name="trash" color='danger'></ion-icon>
+        </button>
+      </ion-item-divider>
+      <div *ngFor="let exercise of exercises">
+        <ion-item *ngIf="exercise.workoutId == workout._id.$oid">
+          <ion-grid>
+            <ion-row>
+                <ion-col col-7 text-left>{{ exercise.name }}</ion-col>
                 <ion-col col-3 text-right>{{ exercise.repetitions }}</ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </div>
-      </ion-item-group>
-  </ion-list>
+                <ion-col col-2 text-right>
+                  <ion-icon name="trash" color='danger' (click)="delete('exercises', exercise)"></ion-icon>
+                </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </div>
+    </ion-item-group>
 
-  <ion-card *ngIf="!hasRegister" padding>
-    <ion-card-header text-center>
-      Nenhum plano de treino
-    </ion-card-header>
-
-    <ion-card-content>
-      <button ion-button full (click)="goToAddTrainingProgram()"> Adicionar plano</button>
-    </ion-card-content>
-  </ion-card>
-
+  </div>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar color="secondary">
-
-    <ion-buttons start>
-        <button ion-button icon-end (click)="goToAddTrainingProgram()">
-          Adicionar treino
-          <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-buttons>
 
     <ion-buttons end>
       <button ion-button icon-end (click)="goToUser()">

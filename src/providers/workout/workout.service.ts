@@ -12,7 +12,7 @@ export class WorkoutService {
   }
 
   getByProgram(trainingProgramId: string) {
-    const apiUrl = `${CONSTANTS.DB_URL}${this.collName}?q={ trainingProgramId: '${trainingProgramId}' }&apiKey=${CONSTANTS.API_KEY}`;
+    const apiUrl = `${CONSTANTS.DB_URL}${this.collName}?q={ trainingProgramId: '${trainingProgramId}' }&s={ order: 1 }&apiKey=${CONSTANTS.API_KEY}`;
     return this.http.get(
       apiUrl,
       { headers: this.headers });

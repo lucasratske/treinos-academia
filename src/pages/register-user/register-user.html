@@ -19,6 +19,26 @@
           <ion-label> Senha </ion-label>
           <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label> Peso (kg)</ion-label>
+          <ion-input type="number" [(ngModel)]="user.weight" name="weight"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Altura (cm) </ion-label>
+          <ion-input type="number" [(ngModel)]="user.height" name="height"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Idade </ion-label>
+          <ion-input type="number" [(ngModel)]="user.age" name="age"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Objetivo </ion-label>
+          <ion-input type="text" [(ngModel)]="user.goal" name="goal"></ion-input>
+        </ion-item>
     </ion-list>
 
     <button ion-button full [disabled]="submitForm.invalid"> Salvar </button>
